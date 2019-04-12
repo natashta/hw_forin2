@@ -1,21 +1,44 @@
-import getNumber from '../src/js/app';
+import getDescription from '../src/js/app';
 
-test('should return number', () => {
-  expect(getNumber('80')).toBe(80);
+const heroWithDescription = {
+  name: 'Лучник',
+  type: 'Bowman',
+  health: 50,
+  level: 3,
+  attack: 40,
+  defence: 10,
+  special: [
+    {
+      id: 8, name: 'Двойной выстрел', icon: 'http://...', description: 'Двойной выстрел наносит двойной урон',
+    },
+  ],
+};
+
+const heroWithoutDescription = {
+  name: 'Лучник',
+  type: 'Bowman',
+  health: 50,
+  level: 3,
+  attack: 40,
+  defence: 10,
+  special: [
+    { id: 9, name: 'Тройной выстрел', icon: 'http://...' },
+  ],
+};
+
+test('should return description from hero special', () => {
+  const expected = [{
+    id: 8, name: 'Двойной выстрел', icon: 'http://...', description: 'Двойной выстрел наносит двойной урон',
+  },
+  ];
+  const recieved = getDescription(heroWithDescription);
+  expect(recieved).toEqual(expected);
 });
 
-test('input null should return error', () => {
-  expect(getNumber('0')).toEqual(Error('Ввод некорректен'));
-});
-
-test('input negative should return error', () => {
-  expect(getNumber('-1')).toEqual(Error('Ввод некорректен'));
-});
-
-test('input non integer should return error', () => {
-  expect(getNumber('0.6')).toEqual(Error('Ввод некорректен'));
-});
-
-test('input string should return error', () => {
-  expect(getNumber('string')).toEqual(Error('Ввод некорректен'));
+test('should return default description', () => {
+  const expected = [{
+    id: 9, name: 'Тройной выстрел', icon: 'http://...', description: 'Описание недоступно',
+  }];
+  const recieved = getDescription(heroWithoutDescription);
+  expect(recieved).toEqual(expected);
 });

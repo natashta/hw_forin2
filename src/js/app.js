@@ -1,13 +1,15 @@
-const getNumber = (str) => {
-  try {
-    let parsed = +str;
-    console.log(parsed);
-    if ((parsed ^ 0) !== parsed || Number.isNaN(parsed) || parsed <= 0) {
-      throw new Error('Ввод некорректен');
-    } else return parsed;
-  } catch (e) {
-    return e;
-  }  
-};
+function getDescription(hero) {
+  const special = [];
+  for (const element of hero.special) {
+    const {
+      id, name, icon, description = 'Описание недоступно',
+    } = element;
+    const result = {
+      id, name, icon, description,
+    };
+    special.push(result);
+  }
+  return special;
+}
 
-export default getNumber;
+export default getDescription;
